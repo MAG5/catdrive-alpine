@@ -20,11 +20,6 @@ fetch latest gnu toolchain from
     make patch
     make all
 
-#### known issues
-
-- ethernet led
-- aw2013 led
-
 Porting the patch from <https://github.com/hanwckf/linux-marvell>
 
 ### Upgrade Kernel

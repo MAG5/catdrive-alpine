@@ -20,7 +20,7 @@ jobs:
         sudo -E apt-get clean
 
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         ref: kernel-5.10
 
@@ -30,7 +30,7 @@ jobs:
         make all
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         path: output/*
 
