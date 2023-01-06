@@ -1,9 +1,9 @@
-name: kernel-5.10
+name: kernel
 
 on:
   push:
     tags:
-      - Kernel-5**
+      - Kernel
 
 jobs:
   build:
@@ -20,9 +20,9 @@ jobs:
         sudo -E apt-get clean
 
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
-        ref: kernel-5.10
+        ref: kernel
 
     - name: Compile kernel
       run: |
@@ -30,7 +30,7 @@ jobs:
         make all
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         path: output/*
 
