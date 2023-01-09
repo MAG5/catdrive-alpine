@@ -30,10 +30,10 @@ ext_init_param() {
 chroot_post() {
 	rm -f $rootfs_mount_point/etc/resolv.conf
 	cat <<-EOF > $rootfs_mount_point/etc/apt/sources.list
-deb [arch=arm64] http://opentuna.cn/debian/ ${os_ver} main contrib non-free
-deb [arch=arm64] http://opentuna.cn/debian/ ${os_ver}-updates main contrib non-free
-deb [arch=arm64] http://opentuna.cn/debian-security/ ${os_ver}/updates main contrib non-free
-deb [arch=arm64] http://opentuna.cn/debian/ ${os_ver}-backports main contrib non-free
+deb [arch=arm64] http://opentuna.cn/debian/ ${os_ver} main
+deb [arch=arm64] http://opentuna.cn/debian/ ${os_ver}-updates main
+deb [arch=amd64] http://opentuna.cn/debian-security/ ${os_ver}-security main
+deb [arch=amd64] http://opentuna.cn/debian/ ${os_ver}-backports main contrib non-free
 
 	EOF
 }

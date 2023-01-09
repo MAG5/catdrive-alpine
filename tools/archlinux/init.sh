@@ -28,6 +28,7 @@ echo 'LANG=en_US.utf8' > ./etc/locale.conf
 echo 'KEYMAP=us' > ./etc/vconsole.conf
 ln -sf ../usr/share/zoneinfo/Asia/Shanghai ./etc/localtime
 echo "vm.zone_reclaim_mode=1" > /etc/sysctl.d/99-vm-reclaim.conf
+echo "CatDrive" > ./etc/hostname
 echo "root:admin" |chpasswd
 
 pacman-key --init

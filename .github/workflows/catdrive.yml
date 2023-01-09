@@ -5,7 +5,7 @@ on:
     types: catdrive
   push:
     tags:
-      - CatDrive-[0-9]+-[0-9]+-[0-9]+
+      - CatDrive
 
 jobs:
   build:
@@ -22,7 +22,7 @@ jobs:
         sudo -E apt-get clean
 
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         ref: master
 
@@ -31,7 +31,7 @@ jobs:
         make build_archlinux=y build_ubuntu=y build_debian=y build
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         path: output/release/*
 

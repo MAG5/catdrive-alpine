@@ -14,7 +14,7 @@ add_svc(){
 
 apk update --no-progress && \
 	apk add --no-progress alpine-base parted \
-	e2fsprogs-extra coreutils uboot-tools pv tzdata
+	e2fsprogs-extra coreutils u-boot-tools pv tzdata
 
 echo "root:admin" | chpasswd
 
