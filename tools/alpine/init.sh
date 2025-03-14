@@ -26,20 +26,15 @@ add_svc "default" "crond ntpd"
 
 add_svc "shutdown" "killprocs mount-ro savecache"
 
-if [ "$BUILD_RESCUE" != "y" ]; then
-	apk add --no-progress dropbear dropbear-scp
-	add_svc "boot" "networking"
-	add_svc "default" "dropbear"
-fi
+apk add --no-progress dropbear dropbear-scp
+add_svc "boot" "networking"
+add_svc "default" "dropbear"
 
 sed -i '/^tty[2-6]/d' ./etc/inittab
 
 echo "ttyMV0::respawn:/sbin/getty -L ttyMV0 115200 vt100" >> ./etc/inittab
 echo "ttyMV0" >> ./etc/securetty
 echo "/dev/mtd1 0x0000 0x10000 0x10000" > /etc/fw_env.config
-
-sed -i 's/pool.ntp.org/time1.aliyun.com/' ./etc/conf.d/ntpd
-ln -sf /usr/share/zoneinfo/Asia/Shanghai ./etc/localtime
 
 echo "alpine" > ./etc/hostname
 

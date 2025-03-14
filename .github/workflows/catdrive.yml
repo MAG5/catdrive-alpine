@@ -1,45 +1,22 @@
-name: catdrive
+name: Build
 
 on:
-  repository_dispatch:
-    types: catdrive
   push:
-    tags:
-      - CatDrive
+    branches: ["master"]
+  workflow_dispatch: {}
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
-
-    - name: Initialize environment
-      id: init
-      env:
-        DEBIAN_FRONTEND: noninteractive
-      run: |
-        sudo -E apt-get update -y
-        sudo -E apt-get install binfmt-support bsdtar build-essential debootstrap jq tar u-boot-tools wget xz-utils -y
-        sudo -E apt-get clean
-
-    - name: Checkout
-      uses: actions/checkout@v3
-      with:
-        ref: master
-
-    - name: Build CatDrive
-      run: |
-        make build_archlinux=y build_ubuntu=y build_debian=y build
-
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
-      with:
-        path: output/release/*
-
-    - name: Create release
-      uses: softprops/action-gh-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        draft: false
-        prerelease: false
-        files: output/release/*
+      - uses: actions/checkout@v4
+      - uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: bsdtar tree debootstrap jq binfmt-support u-boot-tools
+          version: 1.0
+      - run: make build_alpine=y build
+      - run: tree .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: alpine
+          path: tmp/rootfs.img
