@@ -29,7 +29,7 @@ ext_init_param() {
 }
 
 chroot_post() {
-	sed -i 's#http://dl-cdn.alpinelinux.org#https://opentuna.cn#' $rootfs_mount_point/etc/apk/repositories
+	:
 }
 
 add_services() {

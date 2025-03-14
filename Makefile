@@ -1,5 +1,5 @@
-KERNEL := https://github.com/vgist/catdrive/releases/download
-RELEASE_TAG = Kernel-5.10.162
+KERNEL := https://github.com/9abc/catdrive/releases/download
+RELEASE_TAG = Kernel
 DTB := armada-3720-catdrive.dtb
 
 DTB_URL := $(KERNEL)/$(RELEASE_TAG)/$(DTB)
