@@ -41,17 +41,17 @@ func_generate() {
 	echo "create mbr rootfs, size: ${rootsize}M"
 	dd if=/dev/zero bs=1M status=none conv=fsync count=$rootsize of=$tmpdir/$DISK
 	parted -s $tmpdir/$DISK -- mktable msdos
-	parted -s $tmpdir/$DISK -- mkpart p ext4 8192s -1s
+	parted -s $tmpdir/$DISK -- mkpart p fat32 8192s -1s
 
 	# get PTUUID
 	eval `blkid -o export -s PTUUID $tmpdir/$DISK`
 
-	# mkfs.ext4
-	echo "mount loopdev to format ext4 rootfs"
+	# mkfs
+	echo "mount loopdev to format fat32 rootfs"
 	modprobe loop
 	lodev=$(losetup -f)
 	losetup -P $lodev $tmpdir/$DISK
-	mkfs.ext4 -q -m 2 ${lodev}"p1"
+	mkfs.vfat -m 2 -F 32 ${lodev}"p1"
 
 	# mount rootfs
 	echo "mount rootfs"
