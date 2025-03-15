@@ -5,7 +5,7 @@ OUTPUT := $(LOCATION)/output
 TC := gcc-arm-11.2-2022.02-x86_64-aarch64-none-linux-gnu
 TCURL := https://developer.arm.com/-/media/Files/downloads/gnu/11.2-2022.02/binrel/$(TC).tar.xz
 
-KERNEL := linux-5.15.86
+KERNEL := linux-5.15.179
 KCFG := catdrive_defconfig
 KDTS := $(KERNEL)/arch/arm64/boot/dts/marvell/armada-3720-catdrive.dts
 KURL := https://cdn.kernel.org/pub/linux/kernel/v5.x/$(KERNEL).tar.xz
