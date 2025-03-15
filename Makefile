@@ -10,20 +10,12 @@ QEMU_URL := https://github.com/multiarch/qemu-user-static/releases/download
 QEMU_TAG = v7.1.0-2
 QEMU := x86_64_qemu-aarch64-static
 
-TARGETS := alpine
-
 DL := dl
 DL_KERNEL := $(DL)/kernel/$(RELEASE_TAG)
 DL_QEMU := $(DL)/qemu
 
 CURL := curl -O -L
 download = ( mkdir -p $(1) && cd $(1) ; $(CURL) $(2) )
-
-help:
-	@echo "Usage: make build_[system1]=y build_[system2]=y build"
-	@echo "available system: $(TARGETS)"
-
-build: $(TARGETS)
 
 dl_qemu: $(DL_QEMU)
 
@@ -52,11 +44,5 @@ alpine_dl: dl_kernel $(DL)/$(ALPINE_PKG)
 $(DL)/$(ALPINE_PKG):
 	$(call download,$(DL),$(ALPINE_URL_BASE)/$(ALPINE_PKG))
 
-alpine_clean:
-
-ifeq ($(build_alpine),y)
-alpine: alpine_dl
+build: alpine_dl
 	sudo ./build.sh generate $(DL)/$(ALPINE_PKG) $(DL_KERNEL)
-else
-alpine:
-endif

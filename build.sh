@@ -18,21 +18,14 @@ qemu_static="./tools/qemu/qemu-aarch64-static"
 cur_dir=$(pwd)
 DTB=armada-3720-catdrive.dtb
 
+# TODO by init.sh?
 add_services() {
-	if [ "$BUILD_RESCUE" != "y" ]; then
-		echo "add resize mmc script"
-		cp ./tools/${os}/resizemmc.sh $rootfs_mount_point/sbin/resizemmc.sh
-		cp ./tools/${os}/resizemmc $rootfs_mount_point/etc/init.d/resizemmc
-		ln -sf /etc/init.d/resizemmc $rootfs_mount_point/etc/runlevels/default/resizemmc
-		touch $rootfs_mount_point/root/.need_resize
-	fi
+	echo "add resize mmc script"
+	cp ./tools/${os}/resizemmc.sh $rootfs_mount_point/sbin/resizemmc.sh
+	cp ./tools/${os}/resizemmc $rootfs_mount_point/etc/init.d/resizemmc
+	ln -sf /etc/init.d/resizemmc $rootfs_mount_point/etc/runlevels/default/resizemmc
+	touch $rootfs_mount_point/root/.need_resize
 }
-
-gen_new_name() {
-	local rootfs=$1
-	echo "`basename $rootfs | sed "s/${origin}/${target}/" | sed 's/.tar.gz$//'`"
-}
-
 
 DISK="rootfs.img"
 
@@ -102,9 +95,6 @@ func_generate() {
 	# clean rootfs
 	rm -f $rootfs_mount_point/init.sh
 	[ -n "$qemu" ] && rm -f $rootfs_mount_point/$qemu || rm -f $rootfs_mount_point/usr/bin/qemu-aarch64-static
-
-	# add services
-	add_services
 
 	# add /boot
 	echo "add /boot"
