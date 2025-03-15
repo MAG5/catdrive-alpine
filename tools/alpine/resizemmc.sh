@@ -1,3 +1,3 @@
 #!/bin/sh
-
-parted /dev/mmcblk0 resizepart 1 Yes 100% && resize2fs /dev/mmcblk0p1 && echo "resize done, please reboot" || echo "resize failed!"
+# https://stackoverflow.com/a/68546843
+echo -e "resizepart 1 100%\nYes\nquit" | parted /dev/mmcblk0 ---pretend-input-tty && resize2fs /dev/mmcblk0p1 && echo "resize done, please reboot" || echo "resize failed!"

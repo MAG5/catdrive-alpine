@@ -5,7 +5,7 @@ description="Resize rootfs partition."
 start() {
 	if [ -e /root/.need_resize ] ; then
 		ebegin "Resize rootfs, please reboot after finish"
-		/sbin/resizemmc.sh > /dev/null 2>&1
+		/sbin/resizemmc.sh
 		eend $?
 		rm -f /root/.need_resize
 	fi
