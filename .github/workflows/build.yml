@@ -1,0 +1,39 @@
+name: Build
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: ccache gcc-aarch64-linux-gnu squashfs-tools binfmt-support
+          version: 0.1
+      # non-cachable
+      - run: sudo apt-get install -y qemu-user-static
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.ccache
+            build
+          key: ${{ runner.os }}-primes
+      - run: make build/initramfs-generic build/apks.tar.xz
+      - uses: softprops/action-gh-release@v2
+        with:
+          prerelease: true
+          tag_name: latest
+          files: |
+            build/Image
+            build/armada-3720-catdrive.dtb
+            build/modloop
+            build/initramfs-generic
+            build/apks.tar.xz
+      # - uses: actions/upload-artifact@v4
+      #   with:
+      #     name: alpine
+      #     path: tmp/rootfs.img
